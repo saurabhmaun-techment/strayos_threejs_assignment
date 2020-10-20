@@ -6,7 +6,7 @@ function main() {
     const fov = 45;
     const aspect = window.innerWidth / window.innerHeight; // the canvas default
     const near = 1;
-    const far = 2000;
+    const far = 400;
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.set(0, 0, 400);
 
@@ -18,7 +18,7 @@ function main() {
     scene.background = new THREE.Color('white');
 
     {
-        const planeSize = 40;
+        const planeSize = 500;
 
         // const loader = new THREE.TextureLoader();
         // const texture = loader.load('./assets/models/texture0000.png');
