@@ -17,26 +17,26 @@ function main() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color('white');
 
-    {
-        const planeSize = 500;
+    // {
+    //     const planeSize = 500;
 
-        // const loader = new THREE.TextureLoader();
-        // const texture = loader.load('./assets/models/texture0000.png');
-        // texture.wrapS = THREE.RepeatWrapping;
-        // texture.wrapT = THREE.RepeatWrapping;
-        // texture.magFilter = THREE.NearestFilter;
-        // const repeats = planeSize / 2;
-        // texture.repeat.set(repeats, repeats);
+    //     // const loader = new THREE.TextureLoader();
+    //     // const texture = loader.load('./assets/models/texture0000.png');
+    //     // texture.wrapS = THREE.RepeatWrapping;
+    //     // texture.wrapT = THREE.RepeatWrapping;
+    //     // texture.magFilter = THREE.NearestFilter;
+    //     // const repeats = planeSize / 2;
+    //     // texture.repeat.set(repeats, repeats);
 
-        const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
-        const planeMat = new THREE.MeshPhongMaterial({
-            // map: texture,
-            side: THREE.DoubleSide,
-        });
-        const mesh = new THREE.Mesh(planeGeo, planeMat);
-        mesh.rotation.x = Math.PI * -.5;
-        scene.add(mesh);
-    }
+    //     const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
+    //     const planeMat = new THREE.MeshPhongMaterial({
+    //         // map: texture,
+    //         side: THREE.DoubleSide,
+    //     });
+    //     const mesh = new THREE.Mesh(planeGeo, planeMat);
+    //     mesh.rotation.x = Math.PI * -.5;
+    //     scene.add(mesh);
+    // }
 
     {
         const skyColor = 0xB1E1FF; // light blue
@@ -59,8 +59,25 @@ function main() {
         const objLoader = new THREE.OBJLoader2();
         objLoader.loadMtl('./assets/models/geomodel.mtl', null, (materials) => {
             objLoader.setMaterials(materials);
-            objLoader.load('./assets/models/geomodel.obj', (event) => {
-                const root = event.detail.loaderRootNode;
+            // console.log(objLoader);
+            objLoader.load('./assets/models/geomodel.obj', (object) => {
+                const root = object.detail.loaderRootNode;
+                root.traverse(function(child) {
+                    // console.log(child);
+                    if (child instanceof THREE.Mesh) {
+                        var geometry = new THREE.Geometry().fromBufferGeometry(child.geometry);
+                        var faces = geometry.faces;
+                        var vertices = geometry.vertices;
+                        var materials = child.materials;
+
+                        console.log(child);
+                        // for (i = 0; i < faces.length; i++) {
+                        // geometry.faces[i].color.setHex(Math.random() * 0xffffff);
+                        // console.log(faces[i]);
+                        // geometry.faces[i].color.setHex(Math.random() * 0xffffff);
+                        // }
+                    }
+                });
                 scene.add(root);
             });
         });
