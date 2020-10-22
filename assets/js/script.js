@@ -65,17 +65,39 @@ function main() {
                 root.traverse(function(child) {
                     // console.log(child);
                     if (child instanceof THREE.Mesh) {
+                        console.log("Main Child");
+                        console.log(child);
                         var geometry = new THREE.Geometry().fromBufferGeometry(child.geometry);
+                        console.log("Main Geometry");
+                        console.log(geometry);
                         var faces = geometry.faces;
                         var vertices = geometry.vertices;
-                        var materials = child.materials;
+                        var materials = child.material;
 
-                        console.log(child);
-                        // for (i = 0; i < faces.length; i++) {
-                        // geometry.faces[i].color.setHex(Math.random() * 0xffffff);
-                        // console.log(faces[i]);
-                        // geometry.faces[i].color.setHex(Math.random() * 0xffffff);
+                        // for (i = 0; i < 1000; i++) {
+                        //     var face = faces[i];
+                        //     console.log(face.normal);
+
+                        //     face.color.setRGB(Math.random(), Math.random(), Math.random());
                         // }
+
+                        // for (i = 0; i < 100; i++) {
+                        //     var vertex = vertices[i]
+                        //     vertex.color = new THREE.Color(0, 1, 0);
+                        // }
+
+                        // materials[0].color = new THREE.Color(0, 1, 0);
+                        // materials[0].needsUpdate = true;
+                        // for (i = 0; i < materials.length; i++) {
+                        //     const material = materials[i];
+                        //     material.color.setHex(Math.random() * 0xffffff);
+                        //     material.needsUpdate = true;
+                        // }
+
+                        materials.needsUpdate = true;
+                        geometry.colorsNeedUpdate = true;
+                        geometry.elementsNeedUpdate = true;
+                        geometry.verticesNeedUpdate = true;
                     }
                 });
                 scene.add(root);
